@@ -6,8 +6,6 @@ app = Flask(__name__)
 
 try:
     db = psycopg2.connect(
-            user = "",
-            password = "",
             host = "localhost",
             port = "5432",
             database = "test"
@@ -16,7 +14,7 @@ try:
     cursor = db.cursor()
     #cursor.execute(open("initial_adds.sql", )
     
-    
+    """
     cursor.execute(
         ''' CREATE TABLE IF NOT EXISTS "Team" (
                 ID           SERIAL NOT NULL,
@@ -26,8 +24,7 @@ try:
         );'''
     )
     print("Team: Works")
-    db.commit()
-    """
+
     cursor.execute(
         ''' CREATE TABLE IF NOT EXISTS "Player" (
                 ID           SERIAL NOT NULL PRIMARY KEY,
@@ -123,11 +120,6 @@ finally:
             cursor.close()
             db.close()
             print("PostgreSQL connection is closed")
-
-    
-
-#conn = connect(db)
-#cursor = conn.cursor()
 
 @app.route('/')
 def home():
