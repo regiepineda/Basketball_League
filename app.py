@@ -56,7 +56,7 @@ def createTables(cursor):
                     AwayTeamId   INT NOT NULL,
                     WinnerId     INT,
                     LoserId      INT,
-                    GameDate	 DATE,	
+                    GameDate	 TIMESTAMPTZ,	
 
                     PRIMARY KEY (ID),
                     FOREIGN KEY (SeasonYear) REFERENCES "Season" (Year),
@@ -112,18 +112,7 @@ def createTables(cursor):
             if(db):
                 cursor.close()
                 db.close()
-                print("PostgreSQL connection is closed")
-
-"""
-try:
-    db = psycopg2.connect(
-            host = "localhost",
-            port = "5432",
-            database = "test"
-    )
-
-    cursor = db.cursor()
- """   
+                print("PostgreSQL connection is closed") 
 
 db = connectToDB()
 cursor = db.cursor()
@@ -132,10 +121,20 @@ cursor = db.cursor()
 @app.route('/')
 def home():
     try:
+        """
         cursor.execute(
-            ''' SELECT FirstName, LastName, Age, Height, Weight, TeamName
-                FROM "Player"
-                     INNER JOIN "Team" ON ( "Team".Id = "Player".TeamId );
+            ''' SELECT TeamName
+                FROM "Team";
+            '''
+        )
+        """
+
+        cursor.execute(
+            ''' 
+            SELECT PlayerId, FirstName, LastName, GameId, Type, StatValue
+            FROM "StatInfo"
+                 INNER JOIN "Player" ON ( "StatInfo".PlayerId = "Player".Id )
+                 WHERE gameid = 1;
             '''
         )
     except (Exception, psycopg2.DatabaseError) as error:
@@ -144,7 +143,15 @@ def home():
     result = cursor.fetchall()
     for row in result:
         print(result)
-    return render_template("home.html", results = result)
+    return render_template("home.html", title='Home', results = result)
+
+@app.route('/player')
+def player():
+    return render_template("player.html", title='Player')
+
+@app.route('/team')
+def team():
+    return render_template("team.html", title='team')
 
 if __name__ == "__main__":
     app.run(debug=True)

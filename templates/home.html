@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Hoops4You</title>
-    </head>
-
-    <body>
-        <h1>Home Page</h1>
-
-        {% for result in results %}
-            <p>{{result}}</p>
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Home Page</h1>
+    <ol>
+        {% for row in results %}
+            <li>{{row}}</li>
         {% endfor %}
-    </body>
-</html>
+        
+        <!--
+        <li>{{results[0]}}</li>
+        <li>{{results[1]}}</li>
+        <li>{{results[2]}}</li>
+        <li>{{results[3]}}</li>
+        -->
+    </ol>
+{% endblock content %}
