@@ -1,4 +1,7 @@
 Id,PlayerId,GameId,Type,StatValue
+1,1,1,"Pts",20
+2,1,1,"Reb",7
+3,1,1,"Ast",5
 4,2,1,"Pts",12
 5,2,1,"Reb",12
 6,2,1,"Ast",3

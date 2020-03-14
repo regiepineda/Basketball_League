@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import psycopg2
 from psycopg2 import Error
 
@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def connectToDB():
     try:
-        return psycopg2.connect(host = "localhost", port = "5432", database = "test")
+        return psycopg2.connect(user = "usr1", password = "pwd1", host = "localhost", port = "5432", database = "test")
     except (Exception, psycopg2.Error) as error:
         print("Can't connect to database")
         print(error)
@@ -104,46 +104,39 @@ def createTables(cursor):
         )
         print("TeamInSeason: Works")
         db.commit()
+
+
     except (Exception, psycopg2.DatabaseError) as error :
         print ("Error while creating PostgreSQL table", error)
         db.rollback()
     finally:
         #closing database connection.
             if(db):
-                cursor.close()
-                db.close()
+                #cursor.close()
+                # db.close()
                 print("PostgreSQL connection is closed") 
+
+def queryTeam(game):
+    cursor.execute(
+        ''' 
+        SELECT PlayerId, FirstName, LastName, GameId, Type, StatValue
+        FROM "StatInfo"
+             INNER JOIN "Player" ON ( "StatInfo".PlayerId = "Player".Id )
+             WHERE gameid = %s
+        ''', (game[4:]))
+    rows = cursor.fetchall()
+
+    for r in rows:
+        return rows
 
 db = connectToDB()
 cursor = db.cursor()
-#createTables(cursor)
+createTables(cursor)
 
 @app.route('/')
 def home():
-    try:
-        """
-        cursor.execute(
-            ''' SELECT TeamName
-                FROM "Team";
-            '''
-        )
-        """
 
-        cursor.execute(
-            ''' 
-            SELECT PlayerId, FirstName, LastName, GameId, Type, StatValue
-            FROM "StatInfo"
-                 INNER JOIN "Player" ON ( "StatInfo".PlayerId = "Player".Id )
-                 WHERE gameid = 1;
-            '''
-        )
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-        
-    result = cursor.fetchall()
-    for row in result:
-        print(result)
-    return render_template("home.html", title='Home', results = result)
+    return render_template("home.html", title='Home')
 
 @app.route('/player')
 def player():
@@ -152,6 +145,17 @@ def player():
 @app.route('/team')
 def team():
     return render_template("team.html", title='team')
+
+
+
+@app.route('/submit', methods=['POST'])
+def viewStats():
+    game = request.form['game']
+    print(game)
+    
+    teams = queryTeam(game)
+    return render_template("home.html", Teams=teams)
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
