@@ -119,16 +119,19 @@ def createTables(cursor):
 def queryTeam(game):
     cursor.execute(
         ''' 
-        SELECT PlayerId, FirstName, LastName, GameId, Type, StatValue
+        SELECT FirstName, LastName, TeamName, Type, StatValue
         FROM "StatInfo"
              INNER JOIN "Player" ON ( "StatInfo".PlayerId = "Player".Id )
-             WHERE gameid = %s
+             INNER JOIN "Team" ON ( "Player".TeamId = "Team".Id )
+        WHERE gameid = %s
+        ORDER BY TeamName, "Team".Id, "Player".Id;
         ''', (game[4:]))
     rows = cursor.fetchall()
 
-    for r in rows:
-        return rows
+    return rows
 
+"""
+# NEED TO WORK ON STANDINGS
 def showStandings():
     cursor.execute(
         '''
@@ -140,6 +143,21 @@ def showStandings():
     )
     standing = cursor.fetchall()
     return standing
+
+# IF THE GAME HAS NOT BEEN PLAYED YET AND USER SEARCHES THE GAME, SHOW GAME TIME, HOME TEAM, AWAY TEAM
+def gamePreview(game):
+    cursor.execute(
+        '''
+        SELECT TeamName, GameDate
+        FROM "Game"
+             INNER JOIN "Team" ON ( "Game".HomeTeamID = "Team".ID )
+             INNER JOIN "Team" ON ( "Game".AwayTeamID = "Team".ID )
+        WHERE "Game".Id = %s;
+        ''', (game[4:]))
+    
+    rows = cursor.fetchall()
+    return rows
+"""
 
 db = connectToDB()
 cursor = db.cursor()
@@ -165,7 +183,13 @@ def game():
         game = request.form['game']
         print(game)
         teams = queryTeam(game)
-        return render_template("game.html", title='Game', Teams=teams)
+        if teams is not None:
+            return render_template("game.html", title='Game', teams=teams)
+        else:
+            gameInfo = gamePreview(game)
+            print(gameInfo)
+            return render_template("game.html", title='Game', gameInfo = gameInfo)
+            
     return render_template("game.html", title='Game')
 
 """
