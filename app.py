@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def connectToDB():
     try:
-        return psycopg2.connect(user = "usr1", password = "pwd1", host = "localhost", port = "5432", database = "test")
+        return psycopg2.connect(host = "localhost", port = "5432", database = "test")
     except (Exception, psycopg2.Error) as error:
         print("Can't connect to database")
         print(error)
@@ -129,14 +129,27 @@ def queryTeam(game):
     for r in rows:
         return rows
 
+def showStandings():
+    cursor.execute(
+        '''
+        SELECT TeamName, COUNT(WinnerID), COUNT(LoserID)
+        FROM "Game"
+             INNER JOIN "Team" ON ( "Game".HomeTeamID = "Team".ID AND "Game".AwayTeamID = "Team".ID )
+        GROUP BY TeamName;
+        '''
+    )
+    standing = cursor.fetchall()
+    return standing
+
 db = connectToDB()
 cursor = db.cursor()
-createTables(cursor)
+#createTables(cursor)
 
 @app.route('/')
+@app.route('/home')
 def home():
-
-    return render_template("home.html", title='Home')
+    standing = showStandings()
+    return render_template("home.html", title='Home', standing=standing)
 
 @app.route('/player')
 def player():
@@ -146,15 +159,24 @@ def player():
 def team():
     return render_template("team.html", title='team')
 
+@app.route('/game', methods=['GET', 'POST'])
+def game():
+    if request.method == "POST":
+        game = request.form['game']
+        print(game)
+        teams = queryTeam(game)
+        return render_template("game.html", title='Game', Teams=teams)
+    return render_template("game.html", title='Game')
 
-
+"""
 @app.route('/submit', methods=['POST'])
 def viewStats():
     game = request.form['game']
     print(game)
     
     teams = queryTeam(game)
-    return render_template("home.html", Teams=teams)
+    return render_template("game.html", Teams=teams)
+"""
     
 
 if __name__ == "__main__":

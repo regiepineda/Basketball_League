@@ -1,14 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Home Page</h1>
-    {% for team in standing %}
-    <li>{{team}}</li>
-    {% endfor %}
-<!--
+<h1>Game Page</h1>
 <ol>
     <p>You can view the stats of players in the two teams in a game. Choose a game.</p>
     <h3>Game</h3>
-    <form action="/submit" method="POST">
+    <form action="/game" method="POST">
         <select name="game">
             <option value="">Select Game</option>
             <option value="game1">Game 1</option>
@@ -26,6 +22,4 @@
     <li>{{team}}</li>
     {% endfor %}
 </ol>
--->
-
 {% endblock content %}
