@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Insert Players</h1>
+
+<p>Please fill the form.</p>
+<table border=1 width="300">
+
+<tr style="text-align:center;">
+
+<td colspan="2">Insert Player</td>
+</tr>
+
+<tr>
+
+<td>Player ID</td>
+
+<td>
+
+<input type="INT" PlayerID="PlayerID">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>First Name</td>
+
+<td>
+
+<input type="Varchar" FirstName="FirstName">
+
+</td>
+
+</tr>
+
+<td>Last Name</td>
+
+<td>
+
+<input type="Varchar" LastName="LastName">
+
+</td>
+
+</tr>
+
+<td>Height(ft)</td>
+
+<td>
+
+<input type="Varchar" Height="Height">
+
+</td>
+
+</tr>
+<td>Weight(lb)</td>
+
+<td>
+
+<input type="INT" Weight="Weight">
+
+</td>
+
+</tr>
+<td>Age</td>
+
+<td>
+
+<input type="INT" Age="Age">
+
+</td>
+
+</tr>
+<td>Team ID</td>
+
+<td>
+
+<input type="INT" TeamID="TeamID">
+
+</td>
+
+</tr>
+
+</table>
+<input type="submit" value="Submit" />
+<input type="reset" value="Reset" />
+			
+
+
+{% endblock content %}
