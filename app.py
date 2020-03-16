@@ -169,43 +169,40 @@ def home():
     #standing = showStandings()
     return render_template("home.html", title='Home')
 
-@app.route('/player')
+@app.route('/player_stats')
 def player():
-    return render_template("player.html", title='Player')
+    return render_template("player_stats.html", title='Player')
 
-@app.route('/team')
-def team():
-    return render_template("team.html", title='team')
-
-@app.route('/game', methods=['GET', 'POST'])
+@app.route('/game_stats', methods=['GET', 'POST'])
 def game():
     if request.method == "POST":
         game = request.form['game']
         print(game)
         teams = queryTeam(game)
         if teams is not None:
-            return render_template("game.html", title='Game', teams=teams)
+            return render_template("game_stats.html", title='Game', teams=teams)
         else:
             gameInfo = gamePreview(game)
             print(gameInfo)
-            return render_template("game.html", title='Game', gameInfo = gameInfo)
+            return render_template("game_stats.html", title='Game', gameInfo = gameInfo)
             
-    return render_template("game.html", title='Game')
+    return render_template("game_stats.html", title='Game')
 
-@app.route('/insertplayer', methods=['GET', 'POST'])
+@app.route('/standing')
+def standing():
+    return render_template("standing.html", title="Standing")
+
+@app.route('/update_game')
+def update_game():
+    return render_template("update_game.html", title="Update Game")
+
+@app.route('/insert_player', methods=['GET', 'POST'])
 def insert_player():
     return render_template("insert_player.html", title='Insert Player')
 
-"""
-@app.route('/submit', methods=['POST'])
-def viewStats():
-    game = request.form['game']
-    print(game)
-    
-    teams = queryTeam(game)
-    return render_template("game.html", Teams=teams)
-"""
-    
+@app.route('/insert_stat')
+def insert_stat():
+    return render_template("insert_stat.html", title='Insert Stat')
 
 if __name__ == "__main__":
     app.run(debug=True)
