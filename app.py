@@ -166,8 +166,8 @@ cursor = db.cursor()
 @app.route('/')
 @app.route('/home')
 def home():
-    standing = showStandings()
-    return render_template("home.html", title='Home', standing=standing)
+    #standing = showStandings()
+    return render_template("home.html", title='Home')
 
 @app.route('/player')
 def player():
@@ -191,6 +191,10 @@ def game():
             return render_template("game.html", title='Game', gameInfo = gameInfo)
             
     return render_template("game.html", title='Game')
+
+@app.route('/insertplayer', methods=['GET', 'POST'])
+def insert_player():
+    return render_template("insert_player.html", title='Insert Player')
 
 """
 @app.route('/submit', methods=['POST'])
