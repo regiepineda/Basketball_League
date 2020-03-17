@@ -18,46 +18,47 @@
     <button>View</button>
 </form>
 
+{% for result in gameResult %}
+    <p>{{result}}</p>
+{% endfor %}
+ 
+
+<h2>Home Team</h2>
 <table style="width:100%">
     <tr>
       <th>First Name</th>
       <th>Last Name</th>
       <th>Team</th>
-      <th>Stat Type</th>
-      <th>Stat Value</th>
+      <th>Pts</th>
+      <th>Reb</th>
+      <th>Ast</th>
     </tr>
-    {% for team in teams %}
+    {% for player in homeTeam %}
     <tr>
-        {% for row in team %}
+        {% for row in player %}
             <td>{{row}}</td>
         {% endfor %}
     </tr>
     {% endfor %}  
 </table>
 
-<!--
-<ol>
-    <p>You can view the stats of players in the two teams in a game. Choose a game.</p>
-    <h3>Game</h3>
-    <form action="/game" method="POST">
-        <select name="game">
-            <option value="">Select Game</option>
-            <option value="game1">Game 1</option>
-            <option value="game2">Game 2</option>
-            <option value="game3">Game 3</option>
-            <option value="game4">Game 4</option>
-            <option value="game5">Game 5</option>
-            <option value="game6">Game 6</option>
-        </select>
+<h2>Away Team</h2>
+<table style="width:100%">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Team</th>
+      <th>Pts</th>
+      <th>Reb</th>
+      <th>Ast</th>
+    </tr> 
 
-        <button>View</button>
-    </form>
-
-    {% for team in teams %}
-       {% for row in team %}
-            <li>{{row}}</li>
-       {% endfor %}
-    {% endfor %}
-</ol>
--->
+    {% for player in awayTeam %}
+    <tr>
+        {% for row in player %}
+            <td>{{row}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %} 
+</table>
 {% endblock content %}
