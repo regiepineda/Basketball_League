@@ -1,0 +1,161 @@
+Final Report
+========================================================
+INTRODUCTION
+Team: Error 404: Brain Not Found 
+Members:  Regie Pineda, Tony Moon, Yingjun Fan, Cody Rhee, Yunjae Cho
+Project:  Basketball League Database
+Business Problem:   
+Hoops4You is a new basketball league that started in Seattle, Washington. The league has weekly games and it has been keeping track of all the games and teams data in a mass notebook. Currently, the teams and players do not have direct access to these stats. They must wait until all the data has been updated and wait for the league to post the game stats. The league also wants to start recording individual player data, but with their old-fashioned recording system, it is too much work for them. The league manager wants to have an easier way to update and keep track of all this data in a more efficient way so that the teams and individual players have ubiquitous access to this information.
+High Level Interface:   
+Interface: We will provide a GUI application which will allow users to access league information. Users will be able to see game stats/outcomes (e.g. home team, away team, winner, loser, game date, etc), player stats (points, rebounds, assists), team standings. Users will also be allowed to update and insert player stats.
+User interactions:
+Insert new player (player id, name, height, weight, age, team id)
+Insert player stats (points, rebounds, assists)
+Retrieve player stats (points, rebounds, assists)
+Retrieve game outcome/stats 
+View team standings
+Update winner and loser of each game
+
+
+
+SCHEMA DESIGN
+
+
+Constraints
+Unique
+TeamName in the Team entity table is a unique value. Every team has their own unique name. There can’t be two teams with the same name in a season. Also, a team cannot use a name that has been used in previous seasons unless they are the same team that is playing. 
+Not Null
+The values listed below will be implemented as NOT NULL constraint because they are foreign keys of a different table
+TeamsInSeason’s SeasonID references Season (Year)
+TeamsInSeason’s TeamID references Team (ID)
+Game’s SeasonYear references Season (Year)
+Game’s HomeTeamID references Team (ID)
+Game’s AwayTeamID references Team (ID)
+StatInfo’s PlayerID references Player (ID)
+StatInfo’s GameID references Game (ID)
+StatInfo’s Type references StatType (ID)
+The values listed below have a NOT NULL constraint because they are required values when inserting into their designated tables
+Player’s FirstName cannot be Null
+Player’s LastName cannot be Null
+StatInfo’s StatValue cannot be Null
+Primary Key
+Player → ID
+StatInfo → ID
+StatType → ID
+Team → ID
+Season → Year
+Game → ID
+TeamsInSeason
+SeasonID
+TeamID
+Foreign Key
+TeamsInSeason’s SeasonID references Season (Year)
+TeamsInSeason’s TeamID references Team (ID)
+Game’s SeasonYear references Season (Year)
+Game’s HomeTeamID references Team (ID)
+Game’s AwayTeamID references Team (ID)
+Game’s WinnerID references Team (ID)
+Game’s LoserID references Team (ID)
+StatInfo’s PlayerID references Player (ID)
+StatInfo’s GameID references Game (ID)
+StatInfo’s Type references StatType (ID)
+USER INTERFACE DESIGN
+Description of Interactions
+Interaction
+Expected Result
+Insert new player (player id, name, height, weight, age, team id)
+Player information is inserted into the Player entity in the database. Error shown if first name, last name, and team name values are not included in insertion 
+Insert player game stats (points, rebounds, assists)
+Player statistics are stored in the database system to be returned later
+Retrieve player stats (points, rebounds, assists)
+If the player searched exists, it will display player name, affiliated team name, and a game log table of stats (points, rebounds, assists) of the searched player. If player does not exist, user is notified
+Retrieve game outcome/stats 
+Displays the two teams in the game and total points, rebounds, and assists for each of the teams
+View team standings (Rank by win-loss)
+Retrieve and display the up-to-date standing of the teams based on their win-loss record
+Update winner and loser of each game
+Successfully update the WinnerId and LoserId in the game table 
+
+DEVELOPMENT TOOLS AND ENVIRONMENT
+In this section, we will outline the tools we chose to use for this project. 
+Choose Database Software ( DBMS)
+PostgreSQL
+Team Error 404 has chosen this DBMS because of its ease of use, popularity.
+UI tools
+For the front-end side, we have chosen a simple HTML page with buttons. We have also used CSS, Python, and Flask. 
+Database Hosting
+ Team Error 404 has chosen PostgreSQL for database hosting.
+Any other support software you will use in your project
+Version Control: GitHub
+Github is a very known platform for collaborators to share their code and it is free to use. Besides that, most of our members have experience in using GitHub as a version control platform.
+SCHEDULE
+Milestones for this project largely mirror the project iteration for each of the following deliverables. Dates shown are the date it was finished on or the expected deadline.
+TEAM FORMATION (Week 3 & 4, January 24th - February 20th)
+Set team by laws
+Brainstorm project ideas
+Check feasibility
+Decide project idea
+DIAGRAM (Week 5 & 6, February 7th - 20th)
+Business Problem
+Constraints and UI Design
+Create Schema Design and Update
+TOOLING SECTION (Week 7, February 21st - 27th)
+Choose DBMS
+Choose front-end framework tool
+Choose web-hosting service
+Choose data source
+DEVELOP DATABASE (Week 8, February 28th - March 5th)
+Set up web server
+Write up database generation code
+Populate database with data
+ FINISH DATABASE (Week 9, March 5th - 12th)
+Develop website to access database
+Work on final presentation part one
+ PRESENTATION (Week 10, March 13th - 15th)
+Work on final deliverable  and our chosen method to illustrate our work
+Provide a demo using well established queries
+METHODOLOGY 
+For this project, we basically divided the process into four sections, creating the data, creating the database, inputting the data, and we did our website building.
+Data Generation
+Team Error 404 generated data by filling out a total of four teams in the league consisting their home team name, away team name, and each players statistics. The statistics that are available for each team and player will populate the team and player records. We also created data for the games table which contains the game's status of the game such as the results of a particular game at a specific date. 
+Creating the Database
+In creating the database, team Error 404 has applied many SQL syntax that we learned in our CSS 475, including creating a table, inserting values into a table, and basic queries.
+
+Inputting the Data
+Since the amount of data to be inputted were not as much due to the fact that it is a small basketball league. It was effective to type all of them by hand. Fortunately, one of our members created a python program and typed all of our data in the csv file.
+Building the Website
+The final step of this project is building the website as a means of user interaction with the database. 
+
+AVAILABLE API CALLS/COMMANDS (User Interaction Description)
+Welcome to Hoops4U website. When the user opens our website, they’ll be led to the homepage. The homepage will have a general description of the league. Each of the pages in our site will have a navigation bar at the top of the site so that the user is able easily navigate through our page. The navigation bar will contain the following: Hoops4You (home), Player Stats, Game Stats, Standings, Update Game, Insert Player, Insert Stat.
+Below are the descriptions of the interactions the user can have with the website.
+Retrieve player stats (points, rebounds, assists)
+Once the user comes to the player stat page using the navigation bar, the page will ask the user for the player’s first name, last name, and the team name. The user will be able to enter those information in textboxes in the page. Once all the information requested have been given by the user, the user needs to press the “Search” button in order for the query to process to obtain the player stat. The page will then display the player name, team name, and a game log table which shows the game date, points, rebounds, and assists for each game.
+Retrieve game outcome/stats 
+Once the user comes to the game outcome/stat page using the navigation bar, the page will ask the user to select which game to view .The user will be able to select on a particular game on the page. Once a game is selected, the user will be shown the following information: FirstName, LastName, Team, Stat Type, Stat Value, Winning and Losing team.
+
+View team standings
+When the user uses the navigation bar to go to the standings page, the user will be directly led to a page that shows the current standings of the teams. A query is done to find the number of wins and losses of each team and rank them based on it. If the teams have the same win-loss record, it’ll be ordered by their team ID. 
+Update winner and loser of each game
+In the update page, the user will need to pick which game they will be updating. The user will then provide the winner and loser for the game. The user can then press the “Update” button which will be on the page and that will perform a SQL command to update the specific row in the game table. To check this update, the user can go to the game outcome/stats page which will display the Winning team and Losing team. 
+Insert new player (player id, name, height, weight, age, team id)
+Once the user comes to the insert player page using the navigation bar, the page will ask the user for the player’s first name, last name, height, weight, age and the team ID. The user will be able to enter those information in textboxes in the page. Once all the information requested have been given by the user, the user needs to press the “Insert” button in order for the query to process to obtain the player stat. The page will then display the player list of the team, so the user can check the new player’s information.
+Insert player stats (points, rebounds, assists)
+By inserting a player, the user will be asked to insert the player stats: points, rebounds, and assists. Once the insertion task is complete, the user will navigate back to the team page and be able to find that particular team newly inserted.
+PLEASE NOTE: Currently, we have dummy data in our database for testing. If possible, we request that the demo retrieve queries be generic (e.g. Show me stats of a player on a team) so that we can use the dummy data that we’ve implemented for testing.
+DOCUMENT REVISION HISTORY
+Project Iteration #0
+Initialization of project proposal document
+Used Google documents as for collaboration 
+Addressed the applications, entities, and, business problem
+Project Iteration #1
+Added Schema Diagram 
+Revised entities and attributes to match schema diagram
+Project Iteration #2
+Added assessment tools and schedule 
+Made minor revision based on comments 
+Project Iteration #3
+Used Google documents to start on creating our data
+Drafted our tables in the Google documents
+Fixed our entities names and our schema design
+Added Methodology section
