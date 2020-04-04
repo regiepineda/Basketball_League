@@ -5,9 +5,17 @@ Team: Error 404: Brain Not Found
 Members:  Regie Pineda, Tony Moon, Yingjun Fan, Cody Rhee, Yunjae Cho
 Project:  Basketball League Database
 Business Problem:   
-Hoops4You is a new basketball league that started in Seattle, Washington. The league has weekly games and it has been keeping track of all the games and teams data in a mass notebook. Currently, the teams and players do not have direct access to these stats. They must wait until all the data has been updated and wait for the league to post the game stats. The league also wants to start recording individual player data, but with their old-fashioned recording system, it is too much work for them. The league manager wants to have an easier way to update and keep track of all this data in a more efficient way so that the teams and individual players have ubiquitous access to this information.
+Hoops4You is a new basketball league that started in Seattle, Washington. The league has weekly
+games and it has been keeping track of all the games and teams data in a mass notebook. Currently, 
+the teams and players do not have direct access to these stats. They must wait until all the data has 
+been updated and wait for the league to post the game stats. The league also wants to start recording
+individual player data, but with their old-fashioned recording system, it is too much work for them. 
+The league manager wants to have an easier way to update and keep track of all this data in a more efficient
+way so that the teams and individual players have ubiquitous access to this information.
 High Level Interface:   
-Interface: We will provide a GUI application which will allow users to access league information. Users will be able to see game stats/outcomes (e.g. home team, away team, winner, loser, game date, etc), player stats (points, rebounds, assists), team standings. Users will also be allowed to update and insert player stats.
+Interface: We will provide a GUI application which will allow users to access league information.
+Users will be able to see game stats/outcomes (e.g. home team, away team, winner, loser, game date, etc), 
+player stats (points, rebounds, assists), team standings. Users will also be allowed to update and insert player stats.
 User interactions:
 Insert new player (player id, name, height, weight, age, team id)
 Insert player stats (points, rebounds, assists)
@@ -18,14 +26,14 @@ Update winner and loser of each game
 
 
 
-SCHEMA DESIGN
-
-
 Constraints
 Unique
-TeamName in the Team entity table is a unique value. Every team has their own unique name. There can’t be two teams with the same name in a season. Also, a team cannot use a name that has been used in previous seasons unless they are the same team that is playing. 
+TeamName in the Team entity table is a unique value. Every team has their own unique name. 
+There can’t be two teams with the same name in a season. Also, a team cannot use a name that 
+has been used in previous seasons unless they are the same team that is playing. 
 Not Null
-The values listed below will be implemented as NOT NULL constraint because they are foreign keys of a different table
+The values listed below will be implemented as NOT NULL constraint because they are foreign 
+keys of a different table
 TeamsInSeason’s SeasonID references Season (Year)
 TeamsInSeason’s TeamID references Team (ID)
 Game’s SeasonYear references Season (Year)
